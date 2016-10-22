@@ -1,0 +1,78 @@
+<md-sidenav-layout fullscreen>
+
+  <md-sidenav #sidenav (open)="mybutton1.focus()"  >
+  
+      <md-nav-list> 
+        <div style="font-family: 'Pacifico', serif;">  
+         <span>My options are</span>
+         </div>
+        <br>
+        <br>
+        <button md-raised-button color="primary"  #mybutton1 (click)="onSelect('Education')" > Education
+        </button><br> <br>
+        <button md-raised-button color="primary"  #mybutton2 (click)="onSelect('Preference')" > Preference
+        </button><br> <br>
+        <button md-raised-button color="primary"  #mybutton3 (click)="onSelect('Purpose')"> Purpose
+        </button><br> <br>
+        <button md-raised-button color="primary"  #mybutton4 (click)="onSelect('Testimonials')" > Testimonials
+        </button><br> <br>
+        <button md-raised-button color="primary"  #mybutton5 (click)="onSelect('Donate')" > Donate
+        </button><br> <br>
+        <button md-raised-button color="primary"  #mybutton6 (click)="onSelect('Contact')"> Contact
+        </button> <br>
+    </md-nav-list>
+    </md-sidenav>
+
+<md-toolbar color="primary">
+  <span>
+    <button md-icon-button color="accent" (click)="sidenav.open()">
+      <md-icon> menu</md-icon>
+    </button>
+  </span>
+
+    <span style="font-family: 'Pacifico', serif;">Get my consent!</span> 
+    
+    <span class="example-fill-remaining-space"></span>
+    <span *ngIf="!(af.auth | async)" >
+      <button color="warn" md-mini-fab (click)= "af.auth.login()" >Login</button>
+    </span>
+    <span style="font-family: 'Pacifico', serif;" *ngIf="(af.auth | async)"> 
+      Welcome {{(af.auth | async)?.auth.displayName}} 
+    </span> 
+    <span *ngIf="(af.auth | async)">
+      <button md-avatar-button md-mini-fab (click)="menucard=!menucard">
+        <img md-card-avatar  [alt]= "Login" src="{{(af.auth | async).auth.photoURL}}">
+      </button>
+    </span>
+ </md-toolbar> 
+    <md-card *ngIf="menucard" class="menucard">
+      <img md-card-avatar  [alt]= "Login" src="{{(af.auth | async).auth.photoURL}}">
+      <span style="color: blue;">{{(af.auth | async)?.auth.email}}</span>
+      <md-card-actions align="end"(click)="menucard=!menucard">
+        <button md-raised-button  color="warn" (click)= "af.auth.logout()" >Logout</button>
+      </md-card-actions>
+    </md-card>
+
+ <md-card class = "demo-card">
+
+    <md-card-title color="Primary"> <div style="font-family: 'Pacifico', serif;">  Marital Rape </div></md-card-title>
+    <md-card-subtitle color="Primary"> <div style="font-family: 'Pacifico', serif;">  It's Widespread</div></md-card-subtitle>
+    
+   <md-card-content>
+
+
+    <div *ngIf = "nextconfirm">
+    <button class = "demo-button" md-raised-button color="primary"
+        (click)="confirm()">
+        Continue
+      </button>
+    </div>
+   </md-card-content>
+
+  </md-card>
+
+    <md-card *ngFor = "let studymaterial of studymaterials">{{studymaterial}}
+    </md-card>  
+
+ 
+</md-sidenav-layout>

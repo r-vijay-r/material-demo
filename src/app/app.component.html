@@ -1,0 +1,10 @@
+<nav *ngIf="!lazyloaded" class="center">
+	<div class='submitWrapper'>  
+		<div style="font-family: 'Pacifico', serif;">    
+	      <p>Welcome to the getmyconsent.com!</p>
+	      <p>Please support U.N Intiative to prevent Marital Rape in the World!</p>
+	      <button (click)="lazyloaded=!lazyloaded" routerLink="lazy" routerLinkActive="active" >Ok</button>
+	    </div>
+  	</div>
+</nav>
+<router-outlet></router-outlet>
