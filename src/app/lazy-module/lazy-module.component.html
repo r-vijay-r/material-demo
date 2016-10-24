@@ -70,9 +70,14 @@
    </md-card-content>
 
   </md-card>
-
-    <md-card *ngFor = "let studymaterial of studymaterials">{{studymaterial}}
-    </md-card>  
+<div [@flyInOut]="state"  >
+    <md-card *ngFor = "let studymaterial of studymaterials">
+      {{studymaterial}}
+      <md-card-actions align="end">
+        <button md-raised-button (click)="ok()" >Ok</button>
+      </md-card-actions>
+    </md-card>
+</div>
 
  
 </md-sidenav-layout>

@@ -16,22 +16,31 @@ import { MyButtonServiceService } from './my-button.service';
 @Component({
   selector: 'app-lazy-module',
   templateUrl: './lazy-module.component.html',
-  styleUrls: ['./lazy-module.component.css']
+  styleUrls: ['./lazy-module.component.css'],
+  providers:[MyButtonServiceService],
+  animations: [
+    trigger('flyInOut', [
+      state('in', style({transform: 'translateX(0)'})),
+      state('out', style({transform: 'translateX(0)'})),
+      transition('in <=> out', [
+        animate(2000, keyframes([
+          style({opacity: 1, transform: 'translateX(-15px)', offset: 0.4}),
+          style({opacity: 0, transform: 'translateX(90%)', offset: 0.6}),
+          style({opacity: 0, transform: 'translateX(-15px)', offset: 0.8}),
+          style({opacity: 1, transform: 'translateX(15px)', offset: 1.0}),
+        ]))
+      ])
+    ])
+  ]
 })
 export class LazyModuleComponent implements OnInit {
 
   constructor(private router: Router, private r: ActivatedRoute, private studyService: MyButtonServiceService, public af: AngularFire ) {
-    studyService.studyConfirmed$.subscribe(studymaterial => {
-      setTimeout(() => {
-        this.studymaterials.push(studymaterial)}, 1000);
-        
-    });
-     studyService.studyAnnounced$.subscribe(nextbutton => {
-      this.nextconfirm = !this.nextconfirm;    
-    });
   }
 studymaterials = ['1 in every 5 indian men admit to forcing their wifes into sex, according to a 2011 study by the international center for Research on women'];
-  nextconfirm = false;
+  next:number=0;
+  state:string="in";
+  study:string[]=['hello this is messsage1','hello this is messsage2','hello this is messsage3','hello this is messsage4','1 in every 5 indian men admit to forcing their wifes into sex, according to a 2011 study by the international center for Research on women']
   ngOnInit() {
   }
   onSelect(viewsobj: string) {
@@ -56,6 +65,11 @@ studymaterials = ['1 in every 5 indian men admit to forcing their wifes into sex
        this.router.navigateByUrl("main/consent/contact");
        break; 
     }
-}
-
+  }
+  ok(){
+      this.studymaterials.pop();
+      this.state==="in"?this.state="out":this.state="in";
+      this.studymaterials.push(this.study[this.next++]);
+      this.next===this.study.length?this.next=0:this.next=this.next;
+    }
 }
