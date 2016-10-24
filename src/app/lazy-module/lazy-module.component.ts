@@ -34,8 +34,16 @@ import { MyButtonServiceService } from './my-button.service';
   ]
 })
 export class LazyModuleComponent implements OnInit {
-
+intervel;
+n:number=0;
   constructor(private router: Router, private r: ActivatedRoute, private studyService: MyButtonServiceService, public af: AngularFire ) {
+    this.intervel=setInterval(() => {
+      this.n++;
+      if(this.n==15) {
+      this.ok();
+      }
+      console.log(this.n);
+    },1000);
   }
 studymaterials = ['1 in every 5 indian men admit to forcing their wifes into sex, according to a 2011 study by the international center for Research on women'];
   next:number=0;
@@ -67,9 +75,13 @@ studymaterials = ['1 in every 5 indian men admit to forcing their wifes into sex
     }
   }
   ok(){
-      this.studymaterials.pop();
       this.state==="in"?this.state="out":this.state="in";
+      this.nextValue();
+      this.n=0;
+    }
+  nextValue(){ 
+      this.studymaterials.pop();
       this.studymaterials.push(this.study[this.next++]);
       this.next===this.study.length?this.next=0:this.next=this.next;
-    }
+  }
 }
